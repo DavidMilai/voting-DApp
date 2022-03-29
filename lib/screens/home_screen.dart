@@ -24,6 +24,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold();
+    return SafeArea(
+        child: Scaffold(
+      appBar: AppBar(title: const Text("Start Election")),
+      body: Column(
+        children: [],
+      ),
+    ));
   }
 }
