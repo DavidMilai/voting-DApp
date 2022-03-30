@@ -13,3 +13,6 @@ Future<DeployedContract> loadContract() async {
 
   return contract;
 }
+
+// Future<String> callFunctions(
+//     String functionName, List<dynamic> arguments, Web3Client ethClient) {}
