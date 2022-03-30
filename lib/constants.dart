@@ -3,3 +3,5 @@ String kInfuraUrl =
 
 String kPrivateKey =
     "entry lonely vault cute select scatter artwork glow bone return fuel method";
+
+String kContractAddress = '0x77B494282d7684d356806aEC861061F19986c7D2';
