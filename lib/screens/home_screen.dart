@@ -13,6 +13,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   Client? httpClient;
   Web3Client? web3Client;
+  TextEditingController electionPositionController = TextEditingController();
 
   @override
   void initState() {
@@ -27,8 +28,22 @@ class _HomeScreenState extends State<HomeScreen> {
     return SafeArea(
         child: Scaffold(
       appBar: AppBar(title: const Text("Start Election")),
-      body: Column(
-        children: [],
+      body: Container(
+        padding: const EdgeInsets.all(14),
+        child: Column(
+          children: [
+            TextField(
+                controller: electionPositionController,
+                decoration: const InputDecoration(
+                    filled: true, hintText: "Enter Election name")),
+            const SizedBox(height: 10),
+            SizedBox(
+                height: 45,
+                width: double.infinity,
+                child: ElevatedButton(
+                    onPressed: () {}, child: const Text("Start Election")))
+          ],
+        ),
       ),
     ));
   }
