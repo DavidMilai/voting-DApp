@@ -10,9 +10,17 @@ Future<DeployedContract> loadContract() async {
   final contract = DeployedContract(
       ContractAbi.fromJson(abi as String, "election"),
       EthereumAddress.fromHex(contractAddress));
-
   return contract;
 }
 
-// Future<String> callFunctions(
-//     String functionName, List<dynamic> arguments, Web3Client ethClient) {}
+Future<String> callFunctions(String functionName, List<dynamic> arguments,
+    Web3Client ethClient, String privateKey) async {
+  EthPrivateKey credentials = EthPrivateKey.fromHex(privateKey);
+  DeployedContract contract = await loadContract();
+  final ethFunction = contract.function(functionName);
+  final result = await ethClient.sendTransaction(
+      credentials,
+      Transaction.callContract(
+          contract: contract, function: ethFunction, parameters: arguments));
+  return result;
+}
