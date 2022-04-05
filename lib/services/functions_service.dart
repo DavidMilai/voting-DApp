@@ -25,19 +25,34 @@ Future<String> callFunctions(String functionName, List<dynamic> arguments,
   return result;
 }
 
-Future<String> startElection(String name, ethClient) async {
-  var response = await callFunctions("startElection", [name], ethClient, kPrivateKey);
+Future<List<dynamic>> request(
+    String functionName, List<dynamic> arguments, Web3Client ethClient) async {
+  final contract = await loadContract();
+  final ethFunction = contract.function(functionName);
+  final result = await ethClient.call(
+      contract: contract, function: ethFunction, params: arguments);
+  return result;
+}
+
+Future<String> startElection(String name, Web3Client ethClient) async {
+  var response =
+      await callFunctions("startElection", [name], ethClient, kPrivateKey);
   return response;
 }
 
-
-Future<String> addCandidate(String name, ethClient) async {
-  var response = await callFunctions("addCandidate", [name], ethClient, kPrivateKey);
+Future<String> addCandidate(String name, Web3Client ethClient) async {
+  var response =
+      await callFunctions("addCandidate", [name], ethClient, kPrivateKey);
   return response;
 }
 
-Future<String> authorizeVoter(String address, ethClient) async {
-  var response = await callFunctions("authorizeVoter", [EthereumAddress.fromHex(address)], ethClient, kPrivateKey);
+Future<String> authorizeVoter(String address, Web3Client ethClient) async {
+  var response = await callFunctions("authorizeVoter",
+      [EthereumAddress.fromHex(address)], ethClient, kPrivateKey);
   return response;
 }
 
+Future<List> getCandidatesNumber(Web3Client ethClient) async {
+  List<dynamic> response = await request("getNumCandidates", [], ethClient);
+  return response;
+}
