@@ -56,3 +56,9 @@ Future<List> getCandidatesNumber(Web3Client ethClient) async {
   List<dynamic> response = await request("getNumCandidates", [], ethClient);
   return response;
 }
+
+Future<String> vote(int candidateIndex, Web3Client ethClient) async {
+  var response = await callFunctions(
+      "vote", [BigInt.from(candidateIndex)], ethClient, kPrivateKey);
+  return response;
+}
