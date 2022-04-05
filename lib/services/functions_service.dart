@@ -26,13 +26,18 @@ Future<String> callFunctions(String functionName, List<dynamic> arguments,
 }
 
 Future<String> startElection(String name, ethClient) async {
-  var response = await callFunctions("startElection", [name], ethClient, kPrivateKey)
+  var response = await callFunctions("startElection", [name], ethClient, kPrivateKey);
   return response;
 }
 
 
 Future<String> addCandidate(String name, ethClient) async {
-  var response = await callFunctions("addCandidate", [name], ethClient, kPrivateKey)
+  var response = await callFunctions("addCandidate", [name], ethClient, kPrivateKey);
+  return response;
+}
+
+Future<String> authorizeVoter(String address, ethClient) async {
+  var response = await callFunctions("authorizeVoter", [EthereumAddress.fromHex(address)], ethClient, kPrivateKey);
   return response;
 }
 
