@@ -24,3 +24,9 @@ Future<String> callFunctions(String functionName, List<dynamic> arguments,
           contract: contract, function: ethFunction, parameters: arguments));
   return result;
 }
+
+Future<String> startElection(String name, ethClient) async {
+  var response = await callFunctions("startElection", [name], ethClient, kPrivateKey)
+  return response;
+}
+
