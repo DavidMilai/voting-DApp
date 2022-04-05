@@ -30,3 +30,9 @@ Future<String> startElection(String name, ethClient) async {
   return response;
 }
 
+
+Future<String> addCandidate(String name, ethClient) async {
+  var response = await callFunctions("addCandidate", [name], ethClient, kPrivateKey)
+  return response;
+}
+
