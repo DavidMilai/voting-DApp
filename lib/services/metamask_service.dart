@@ -30,6 +30,8 @@ class MetaMaskService extends ChangeNotifier {
     currentAddress = "";
 
     currentChain = -1;
+
+    notifyListeners();
   }
 
   init() {
