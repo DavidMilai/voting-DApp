@@ -31,4 +31,11 @@ class MetaMaskService extends ChangeNotifier {
 
     currentChain = -1;
   }
+
+  init() {
+    if (isEnabled) {
+      ethereum!.onAccountsChanged((accounts) => clear());
+      ethereum!.onChainChanged((chainId) => clear());
+    }
+  }
 }
