@@ -21,7 +21,9 @@ Future<String> callFunctions(String functionName, List<dynamic> arguments,
   final result = await ethClient.sendTransaction(
       credentials,
       Transaction.callContract(
-          contract: contract, function: ethFunction, parameters: arguments));
+          contract: contract, function: ethFunction, parameters: arguments),
+      chainId: null,
+      fetchChainIdFromNetworkId: true);
   return result;
 }
 
