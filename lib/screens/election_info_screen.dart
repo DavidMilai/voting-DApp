@@ -115,32 +115,37 @@ class _ElectionInfoScreenState extends State<ElectionInfoScreen> {
                     child: CircularProgressIndicator(),
                   );
                 } else {
-                  return Column(
-                    children: [
-                      for (int i = 0; i < snapshot.data![0].toInt(); i++)
-                        FutureBuilder<List>(
-                            future: candidateInfo(i, widget.web3client),
-                            builder: (context, candidatesnapshot) {
-                              if (candidatesnapshot.connectionState ==
-                                  ConnectionState.waiting) {
-                                return const Center(
-                                  child: CircularProgressIndicator(),
-                                );
-                              } else {
-                                return ListTile(
-                                  title: Text('Name: ' +
-                                      candidatesnapshot.data![0][0].toString()),
-                                  subtitle: Text('Votes: ' +
-                                      candidatesnapshot.data![0][1].toString()),
-                                  trailing: ElevatedButton(
-                                      onPressed: () {
-                                        vote(i, widget.web3client);
-                                      },
-                                      child: const Text('Vote')),
-                                );
-                              }
-                            })
-                    ],
+                  return SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: Column(
+                      children: [
+                        for (int i = 0; i < snapshot.data![0].toInt(); i++)
+                          FutureBuilder<List>(
+                              future: candidateInfo(i, widget.web3client),
+                              builder: (context, candidatesnapshot) {
+                                if (candidatesnapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return const Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                } else {
+                                  return ListTile(
+                                    title: Text('Name: ' +
+                                        candidatesnapshot.data![0][0]
+                                            .toString()),
+                                    subtitle: Text('Votes: ' +
+                                        candidatesnapshot.data![0][1]
+                                            .toString()),
+                                    trailing: ElevatedButton(
+                                        onPressed: () {
+                                          vote(i, widget.web3client);
+                                        },
+                                        child: const Text('Vote')),
+                                  );
+                                }
+                              })
+                      ],
+                    ),
                   );
                 }
               },
