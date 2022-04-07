@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:voting_app/services/functions_service.dart';
 import 'package:web3dart/web3dart.dart';
 
 class ElectionInfoScreen extends StatefulWidget {
@@ -14,6 +15,8 @@ class ElectionInfoScreen extends StatefulWidget {
 }
 
 class _ElectionInfoScreenState extends State<ElectionInfoScreen> {
+  TextEditingController addCandidateController = TextEditingController();
+  TextEditingController authorizeVoterController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,36 +25,14 @@ class _ElectionInfoScreenState extends State<ElectionInfoScreen> {
         padding: const EdgeInsets.all(14),
         child: Column(
           children: [
-            const  SizedBox(
-              height: 20
-            ),
+            const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Column(
                   children: [
                     FutureBuilder<List>(
-                        future: getCandidatesNum(widget.ethClient),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
-                          return Text(
-                            snapshot.data![0].toString(),
-                            style:const TextStyle(
-                                fontSize: 50, fontWeight: FontWeight.bold),
-                          );
-                        }),
-                    Text('Total Candidates')
-                  ],
-                ),
-                Column(
-                  children: [
-                    FutureBuilder<List>(
-                        future: getTotalVotes(widget.ethClient),
+                        future: getCandidatesNum(widget.web3client),
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
@@ -65,29 +46,47 @@ class _ElectionInfoScreenState extends State<ElectionInfoScreen> {
                                 fontSize: 50, fontWeight: FontWeight.bold),
                           );
                         }),
-                    const  Text('Total Votes')
+                    const Text('Total Candidates')
+                  ],
+                ),
+                Column(
+                  children: [
+                    FutureBuilder<List>(
+                        future: getTotalVotes(widget.web3client),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                          return Text(
+                            snapshot.data![0].toString(),
+                            style: const TextStyle(
+                                fontSize: 50, fontWeight: FontWeight.bold),
+                          );
+                        }),
+                    const Text('Total Votes')
                   ],
                 ),
               ],
             ),
-            const SizedBox(
-              height: 20
-            ),
+            const SizedBox(height: 20),
             Row(
               children: [
                 Expanded(
                   child: TextField(
                     controller: addCandidateController,
                     decoration:
-                    InputDecoration(hintText: 'Enter Candidate Name'),
+                        const InputDecoration(hintText: 'Enter Candidate Name'),
                   ),
                 ),
                 ElevatedButton(
                     onPressed: () {
                       addCandidate(
-                          addCandidateController.text, widget.ethClient);
+                          addCandidateController.text, widget.web3client);
                     },
-                    child: Text('Add Candidate'))
+                    child: const Text('Add Candidate'))
               ],
             ),
             Row(
@@ -96,20 +95,20 @@ class _ElectionInfoScreenState extends State<ElectionInfoScreen> {
                   child: TextField(
                     controller: authorizeVoterController,
                     decoration:
-                    const  InputDecoration(hintText: 'Enter Voter address'),
+                        const InputDecoration(hintText: 'Enter Voter address'),
                   ),
                 ),
                 ElevatedButton(
                     onPressed: () {
                       authorizeVoter(
-                          authorizeVoterController.text, widget.ethClient);
+                          authorizeVoterController.text, widget.web3client);
                     },
                     child: Text('Add Voter'))
               ],
             ),
             const Divider(),
             FutureBuilder<List>(
-              future: getCandidatesNum(widget.ethClient),
+              future: getCandidatesNum(widget.web3client),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(
@@ -120,7 +119,7 @@ class _ElectionInfoScreenState extends State<ElectionInfoScreen> {
                     children: [
                       for (int i = 0; i < snapshot.data![0].toInt(); i++)
                         FutureBuilder<List>(
-                            future: candidateInfo(i, widget.ethClient),
+                            future: candidateInfo(i, widget.web3client),
                             builder: (context, candidatesnapshot) {
                               if (candidatesnapshot.connectionState ==
                                   ConnectionState.waiting) {
@@ -135,7 +134,7 @@ class _ElectionInfoScreenState extends State<ElectionInfoScreen> {
                                       candidatesnapshot.data![0][1].toString()),
                                   trailing: ElevatedButton(
                                       onPressed: () {
-                                        vote(i, widget.ethClient);
+                                        vote(i, widget.web3client);
                                       },
                                       child: const Text('Vote')),
                                 );
