@@ -35,6 +35,22 @@ Future<List<dynamic>> request(
   return result;
 }
 
+Future<List> getTotalVotes(Web3Client ethClient) async {
+  List<dynamic> result = await request('getTotalVotes', [], ethClient);
+  return result;
+}
+
+Future<List> getCandidatesNum(Web3Client ethClient) async {
+  List<dynamic> result = await request('getNumCandidates', [], ethClient);
+  return result;
+}
+
+Future<List> candidateInfo(int index, Web3Client ethClient) async {
+  List<dynamic> result =
+      await request('candidateInfo', [BigInt.from(index)], ethClient);
+  return result;
+}
+
 Future<String> startElection(String name, Web3Client ethClient) async {
   var response =
       await callFunctions("startElection", [name], ethClient, kPrivateKey);
