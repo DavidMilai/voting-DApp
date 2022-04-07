@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:voting_app/constants.dart';
-import 'package:voting_app/screens/election_info_screen.dart';
 import 'package:voting_app/services/functions_service.dart';
 import 'package:web3dart/web3dart.dart';
+
+import 'election_info_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -18,8 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
   TextEditingController electionPositionController = TextEditingController();
 
   _startElection() async {
-    if (electionPositionController.text.isNotEmpty &&
-        electionPositionController.text != "") {
+    if (electionPositionController.text.isNotEmpty) {
       await startElection(electionPositionController.text, web3Client!);
       Navigator.push(
           context,
@@ -56,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 45,
                 width: double.infinity,
                 child: ElevatedButton(
-                    onPressed: () async => _startElection,
+                    onPressed: _startElection,
                     child: const Text("Start Election")))
           ],
         ),
