@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:voting_app/constants.dart';
+import 'package:voting_app/services/functions_service.dart';
 import 'package:web3dart/web3dart.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -14,6 +15,13 @@ class _HomeScreenState extends State<HomeScreen> {
   Client? httpClient;
   Web3Client? web3Client;
   TextEditingController electionPositionController = TextEditingController();
+
+  _startElection() {
+    if (electionPositionController.text.isNotEmpty &&
+        electionPositionController.text != "") {
+      startElection(electionPositionController.text, web3Client!);
+    }
+  }
 
   @override
   void initState() {
@@ -41,7 +49,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 45,
                 width: double.infinity,
                 child: ElevatedButton(
-                    onPressed: () {}, child: const Text("Start Election")))
+                    onPressed: () => _startElection,
+                    child: const Text("Start Election")))
           ],
         ),
       ),
