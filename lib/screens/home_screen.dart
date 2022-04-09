@@ -3,7 +3,9 @@ import 'package:http/http.dart';
 import 'package:voting_app/constants.dart';
 import 'package:voting_app/services/functions_service.dart';
 import 'package:web3dart/web3dart.dart';
+import 'package:web_socket_channel/io.dart';
 
+import '../constants.dart';
 import 'election_info_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -35,7 +37,11 @@ class _HomeScreenState extends State<HomeScreen> {
     // TODO: implement initState
     super.initState();
     httpClient = Client();
-    web3Client = Web3Client(kInfuraUrl, httpClient!);
+    // web3Client = Web3Client(kInfuraUrl, httpClient!);
+
+    web3Client = Web3Client(kInfuraUrl, httpClient!, socketConnector: () {
+      return IOWebSocketChannel.connect(kSocketUrl).cast<String>();
+    });
   }
 
   @override
