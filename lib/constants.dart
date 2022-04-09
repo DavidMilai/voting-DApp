@@ -1,5 +1,7 @@
 String kInfuraUrl =
     "https://rinkeby.infura.io/v3/e9c90ade8f1a421a8d2522d925383ff5";
+String kSocketUrl =
+    "wss://rinkeby.infura.io/ws/v3/e9c90ade8f1a421a8d2522d925383ff5";
 
 String kPrivateKey =
     "01b3b3c4a853d48d46a6222a59394bd6bcf0bd53e6ef2fa18a2ee39af903f809";
