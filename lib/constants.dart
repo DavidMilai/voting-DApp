@@ -6,4 +6,5 @@ String kSocketUrl =
 String kPrivateKey =
     "01b3b3c4a853d48d46a6222a59394bd6bcf0bd53e6ef2fa18a2ee39af903f809";
 
-String kContractAddress = '0x77B494282d7684d356806aEC861061F19986c7D2';
+// String kContractAddress = '0x77B494282d7684d356806aEC861061F19986c7D2';
+String kContractAddress = '0x277C319a0056A5d218be43feD98a64EDd410B22D';
