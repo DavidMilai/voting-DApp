@@ -20,7 +20,15 @@ class _ElectionInfoScreenState extends State<ElectionInfoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.electionName)),
+      appBar: AppBar(
+        title: Text(widget.electionName),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: () => setState(() {}),
+          )
+        ],
+      ),
       body: Container(
         padding: const EdgeInsets.all(14),
         child: Column(
@@ -103,7 +111,7 @@ class _ElectionInfoScreenState extends State<ElectionInfoScreen> {
                       authorizeVoter(
                           authorizeVoterController.text, widget.web3client);
                     },
-                    child: Text('Add Voter'))
+                    child: const Text('Add Voter'))
               ],
             ),
             const Divider(),
